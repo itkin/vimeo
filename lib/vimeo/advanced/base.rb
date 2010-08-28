@@ -90,7 +90,8 @@ module Vimeo
 private
 
       def make_request(options)
-        response = Crack::JSON.parse @oauth_consumer.request(:post, "http://vimeo.com/api/rest/v2", get_access_token, {}, options).body
+        base_url = options.delete(:base_url) || "http://vimeo.com/api/rest/v2"        
+        response = Crack::JSON.parse @oauth_consumer.request(:post, base_url, get_access_token, {}, options).body
         validate_response! response
         response
       end

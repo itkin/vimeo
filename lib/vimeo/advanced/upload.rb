@@ -40,6 +40,10 @@ module Vimeo
         self.class.create_json_manifest(md5)
       end
 
+      def upload2(file_path, ticket_id, end_point)
+        make_request(:base_url =>end_point, :ticket_id=> ticket_id, :file_data => File.open(file_path), :chunk_id => 0)          
+      end
+
       # TODO: Make this work with either json or xml manifest.
       # FIXME: Ticket id is required?
       # Verifies a file manifest.

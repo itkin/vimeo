@@ -21,10 +21,12 @@ require 'vimeo'
 class Test::Unit::TestCase
 end
 
+def fixture_path(filename)
+  File.expand_path(File.dirname(__FILE__) + '/fixtures/' + filename)
+end
 def fixture_file(filename)
   return '' if filename == ''
-  file_path = File.expand_path(File.dirname(__FILE__) + '/fixtures/' + filename)
-  File.read(file_path)
+  File.read fixture_path(filename)
 end
 
 def vimeo_base_url(url = "/")
@@ -48,6 +50,7 @@ def stub_get(url, filename, status=nil)
   FakeWeb.register_uri(:get, vimeo_url(url), options)
 end
 
+
 def stub_post(url, filename)
   FakeWeb.register_uri(:post, advanced_vimeo_url, :body => fixture_file(filename), :content_type => 'application/json')
 end
@@ -58,4 +61,8 @@ end
 
 def stub_custom_post(url, filename)
   FakeWeb.register_uri(:post, vimeo_base_url(url), :body => fixture_file(filename), :content_type => 'application/json')
+end
+
+def register_uri(method, uri, filename)
+  FakeWeb.register_uri(method, uri , :body => fixture_file(filename), :content_type => 'application/json')
 end

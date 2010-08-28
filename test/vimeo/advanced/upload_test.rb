@@ -8,6 +8,12 @@ class UploadTest < Test::Unit::TestCase
       @upload = Vimeo::Advanced::Upload.new("12345", "secret", :token => "token", :secret => "secret")
     end
 
+    should "upload" do
+      endpoint = "http://127.0.0.1/18178/"
+      register_uri :post, /18178/, "advanced/upload/upload.json" 
+      @upload.upload2(fixture_path("advanced/upload/sample_iTunes.mov"), 12345, endpoint)
+    end
+
     should "be able confirm an upload" do
       stub_post("?api_key=12345&ticket_id=ticket_id&format=json&auth_token=token&api_sig=576b41966709651aead8754b3c5d370d&method=vimeo.videos.upload.confirm", "advanced/upload/confirm.json")
       response = @upload.confirm("ticket_id")
