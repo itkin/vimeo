@@ -12,6 +12,8 @@ class UploadTest < Test::Unit::TestCase
       endpoint = "http://127.0.0.1/18178/"
       register_uri :post, /18178/, "advanced/upload/upload.json" 
       @upload.upload(endpoint, fixture_path("advanced/upload/sample_iTunes.mov"), 12345)
+      @upload.upload(endpoint, fixture_path("advanced/upload/sample_iTunes.mov"), 12345, 1)
+
     end
 #
 #    should "be able confirm an upload" do
